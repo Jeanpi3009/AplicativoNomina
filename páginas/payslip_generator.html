@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de Desprendibles - NominaContigo</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fnominacont6840back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="bg-surface border-b border-border-light shadow-custom-subtle">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-primary mr-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span class="text-xl font-semibold text-text-primary">NominaContigo</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-primary transition-micro">Dashboard</a>
+                    <a href="contract_setup.html" class="text-text-secondary hover:text-primary transition-micro">Configuración</a>
+                    <a href="payroll_calculator.html" class="text-text-secondary hover:text-primary transition-micro">Calculadora</a>
+                    <a href="payslip_generator.html" class="text-primary font-medium">Generar Nómina</a>
+                </div>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Usuario" class="h-8 w-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <span class="text-sm text-text-secondary">Admin</span>
+                    </div>
+                    <button class="md:hidden p-2 rounded-md text-text-secondary hover:text-primary hover:bg-secondary-50 transition-micro">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-semibold text-text-primary">Generador de Desprendibles</h1>
+                    <p class="mt-2 text-text-secondary">Revise los cálculos finales y exporte desprendibles de nómina profesionales con formato legal colombiano</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="btn-secondary" onclick="window.location.href='payroll_calculator.html'">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        Volver a Calculadora
+                    </button>
+                    <button class="btn-accent" id="batchExportBtn">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Exportar Lote
+                    </button>
+                    <button class="btn-primary" id="exportPdfBtn">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Exportar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Configuration Panel -->
+            <div class="lg:col-span-1">
+                <div class="card p-6 sticky top-8">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Configuración de Empresa</h3>
+                    
+                    <!-- Company Logo Upload -->
+                    <div class="mb-6">
+                        <label class="form-label">Logo de la Empresa</label>
+                        <div class="mt-2">
+                            <div id="logoPreview" class="w-full h-32 border-2 border-dashed border-border rounded-md flex items-center justify-center bg-secondary-50 mb-3">
+                                <div class="text-center">
+                                    <svg class="mx-auto h-12 w-12 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    <p class="text-sm text-secondary-500 mt-2">Subir logo</p>
+                                </div>
+                            </div>
+                            <input type="file" id="logoUpload" accept="image/*" class="hidden" />
+                            <button type="button" onclick="document.getElementById('logoUpload').click()" class="w-full btn-secondary text-sm">
+                                Seleccionar Archivo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Company Information -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="form-label">Nombre de la Empresa</label>
+                            <input type="text" class="form-input" value="Empresa Ejemplo S.A.S." id="companyName" />
+                        </div>
+                        <div>
+                            <label class="form-label">NIT</label>
+                            <input type="text" class="form-input" value="900.123.456-7" id="companyNit" />
+                        </div>
+                        <div>
+                            <label class="form-label">Dirección</label>
+                            <textarea class="form-input" rows="2" id="companyAddress">Calle 123 #45-67, Bogotá D.C.</textarea>
+                        </div>
+                        <div>
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" class="form-input" value="+57 (1) 234-5678" id="companyPhone" />
+                        </div>
+                    </div>
+
+                    <!-- Export Options -->
+                    <div class="mt-6 pt-6 border-t border-border-light">
+                        <h4 class="text-sm font-medium text-text-primary mb-3">Opciones de Exportación</h4>
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="text-primary focus:ring-primary rounded" checked />
+                                <span class="ml-2 text-sm text-text-secondary">Incluir logo de empresa</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="text-primary focus:ring-primary rounded" checked />
+                                <span class="ml-2 text-sm text-text-secondary">Mostrar desglose detallado</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="text-primary focus:ring-primary rounded" checked />
+                                <span class="ml-2 text-sm text-text-secondary">Referencias legales</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="text-primary focus:ring-primary rounded" />
+                                <span class="ml-2 text-sm text-text-secondary">Firma digital</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Legal Compliance Badge -->
+                    <div class="mt-6 pt-6 border-t border-border-light">
+                        <div class="bg-success-50 border border-success-200 rounded-md p-3">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm font-medium text-success-800">Cumplimiento Legal</span>
+                            </div>
+                            <p class="text-xs text-success-700 mt-1">Conforme al Código Laboral Colombiano 2025</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payslip Preview -->
+            <div class="lg:col-span-3">
+                <div class="card">
+                    <!-- Preview Header -->
+                    <div class="px-6 py-4 border-b border-border-light">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-medium text-text-primary">Vista Previa del Desprendible</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-text-secondary">Período:</span>
+                                <span class="text-sm font-medium text-text-primary">Enero 2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payslip Document -->
+                    <div id="payslipPreview" class="p-8 bg-white">
+                        <!-- Document Header -->
+                        <div class="flex items-start justify-between mb-8">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 h-16 bg-secondary-100 rounded-md flex items-center justify-center">
+                                    <svg class="h-8 w-8 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="text-xl font-semibold text-text-primary">Empresa Ejemplo S.A.S.</h2>
+                                    <p class="text-sm text-text-secondary">NIT: 900.123.456-7</p>
+                                    <p class="text-sm text-text-secondary">Calle 123 #45-67, Bogotá D.C.</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <h3 class="text-lg font-semibold text-text-primary">DESPRENDIBLE DE NÓMINA</h3>
+                                <p class="text-sm text-text-secondary">Período: Enero 2025</p>
+                                <p class="text-sm text-text-secondary">Fecha: 25/09/2025</p>
+                            </div>
+                        </div>
+
+                        <!-- Employee Information -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 p-4 bg-secondary-50 rounded-md">
+                            <div>
+                                <h4 class="font-medium text-text-primary mb-2">Información del Empleado</h4>
+                                <div class="space-y-1 text-sm">
+                                    <p><span class="font-medium">Nombre:</span> Juan Pérez García</p>
+                                    <p><span class="font-medium">Identificación:</span> 1234567890</p>
+                                    <p><span class="font-medium">Cargo:</span> Desarrollador Senior</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-text-primary mb-2">Detalles del Contrato</h4>
+                                <div class="space-y-1 text-sm">
+                                    <p><span class="font-medium">Tipo:</span> Término Indefinido</p>
+                                    <p><span class="font-medium">Salario Base:</span> $2.500.000</p>
+                                    <p><span class="font-medium">Fecha Ingreso:</span> 01/01/2025</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calculation Breakdown -->
+                        <div class="mb-8">
+                            <h4 class="font-medium text-text-primary mb-4">Desglose de Cálculos</h4>
+                            
+                            <!-- Regular Hours -->
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b border-border">
+                                            <th class="text-left py-2 font-medium text-text-primary">Concepto</th>
+                                            <th class="text-right py-2 font-medium text-text-primary">Cantidad</th>
+                                            <th class="text-right py-2 font-medium text-text-primary">Valor Unitario</th>
+                                            <th class="text-right py-2 font-medium text-text-primary">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-border-light">
+                                        <tr>
+                                            <td class="py-2">Horas Regulares</td>
+                                            <td class="text-right py-2">160.0 hrs</td>
+                                            <td class="text-right py-2">$15.625</td>
+                                            <td class="text-right py-2 font-medium">$2.500.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Horas Extra Diurnas (25%)</td>
+                                            <td class="text-right py-2">8.0 hrs</td>
+                                            <td class="text-right py-2">$19.531</td>
+                                            <td class="text-right py-2 font-medium">$156.250</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Recargo Nocturno (35%)</td>
+                                            <td class="text-right py-2">4.0 hrs</td>
+                                            <td class="text-right py-2">$21.094</td>
+                                            <td class="text-right py-2 font-medium">$84.375</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Recargo Dominical (75%)</td>
+                                            <td class="text-right py-2">8.0 hrs</td>
+                                            <td class="text-right py-2">$27.344</td>
+                                            <td class="text-right py-2 font-medium">$218.750</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Subtotal -->
+                            <div class="flex justify-end mt-4 pt-4 border-t border-border-light">
+                                <div class="text-right">
+                                    <p class="text-sm"><span class="font-medium">Subtotal Devengado:</span> $2.959.375</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Benefits -->
+                        <div class="mb-8">
+                            <h4 class="font-medium text-text-primary mb-4">Beneficios Sociales</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <tbody class="divide-y divide-border-light">
+                                        <tr>
+                                            <td class="py-2">Cesantías (8.33%)</td>
+                                            <td class="text-right py-2">$208.333</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Intereses de Cesantías (1%)</td>
+                                            <td class="text-right py-2">$25.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Prima de Servicios (8.33%)</td>
+                                            <td class="text-right py-2">$208.333</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Vacaciones (4.17%)</td>
+                                            <td class="text-right py-2">$104.167</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex justify-end mt-4 pt-4 border-t border-border-light">
+                                <div class="text-right">
+                                    <p class="text-sm"><span class="font-medium">Total Beneficios:</span> $545.833</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deductions -->
+                        <div class="mb-8">
+                            <h4 class="font-medium text-text-primary mb-4">Deducciones</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <tbody class="divide-y divide-border-light">
+                                        <tr>
+                                            <td class="py-2">Salud (4%)</td>
+                                            <td class="text-right py-2 text-error">-$100.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Pensión (4%)</td>
+                                            <td class="text-right py-2 text-error">-$100.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Retención en la Fuente</td>
+                                            <td class="text-right py-2 text-error">-$85.000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex justify-end mt-4 pt-4 border-t border-border-light">
+                                <div class="text-right">
+                                    <p class="text-sm"><span class="font-medium">Total Deducciones:</span> <span class="text-error">-$285.000</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Final Summary -->
+                        <div class="bg-primary-50 p-6 rounded-md">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-medium text-text-primary">Total Devengado:</span>
+                                    <span class="font-semibold text-text-primary">$2.959.375</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-medium text-text-primary">Total Deducciones:</span>
+                                    <span class="font-semibold text-error">-$285.000</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-2 border-t border-primary-200">
+                                    <span class="text-lg font-semibold text-text-primary">Neto a Pagar:</span>
+                                    <span class="text-xl font-bold text-primary">$2.674.375</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Legal Footer -->
+                        <div class="mt-8 pt-6 border-t border-border-light text-center">
+                            <p class="text-xs text-text-secondary">
+                                Este desprendible de nómina cumple con las disposiciones del Código Sustantivo del Trabajo de Colombia
+                                y la normatividad vigente para el año 2025. Generado el 25/09/2025.
+                            </p>
+                            <p class="text-xs text-text-secondary mt-2">
+                                © 2025 NominaContigo. Todos los derechos reservados.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="px-6 py-4 border-t border-border-light bg-secondary-50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <button class="btn-secondary" id="editDataBtn">
+                                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                    Editar Datos
+                                </button>
+                                <button class="btn-secondary" id="previewBtn">
+                                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    Vista Previa PDF
+                                </button>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button class="btn-accent" id="saveTemplateBtn">
+                                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"/>
+                                    </svg>
+                                    Guardar Plantilla
+                                </button>
+                                <button class="btn-primary" id="downloadPdfBtn">
+                                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                    Descargar PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobileMenu" class="hidden md:hidden fixed inset-0 z-50 bg-black bg-opacity-50">
+        <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-surface shadow-xl">
+            <div class="flex items-center justify-between p-4 border-b border-border-light">
+                <span class="text-lg font-semibold text-text-primary">Menú</span>
+                <button id="closeMobileMenu" class="p-2 rounded-md text-text-secondary hover:text-primary">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4">
+                <a href="dashboard.html" class="block py-2 text-text-secondary hover:text-primary">Dashboard</a>
+                <a href="contract_setup.html" class="block py-2 text-text-secondary hover:text-primary">Configuración</a>
+                <a href="payroll_calculator.html" class="block py-2 text-text-secondary hover:text-primary">Calculadora</a>
+                <a href="payslip_generator.html" class="block py-2 text-primary font-medium">Generar Nómina</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Edit Data Modal -->
+    <div id="editModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-surface rounded-lg shadow-xl max-w-2xl w-full max-h-96 overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-text-primary">Editar Datos del Desprendible</h3>
+                    <button id="closeEditModal" class="p-2 rounded-md text-text-secondary hover:text-primary">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="editForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Horas Extra Diurnas</label>
+                            <input type="number" class="form-input" value="8" step="0.5" min="0" />
+                        </div>
+                        <div>
+                            <label class="form-label">Horas Recargo Nocturno</label>
+                            <input type="number" class="form-input" value="4" step="0.5" min="0" />
+                        </div>
+                        <div>
+                            <label class="form-label">Horas Dominicales</label>
+                            <input type="number" class="form-input" value="8" step="0.5" min="0" />
+                        </div>
+                        <div>
+                            <label class="form-label">Retención Fuente</label>
+                            <input type="number" class="form-input" value="85000" min="0" />
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" id="cancelEdit" class="btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn-primary">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Logo upload functionality
+        document.getElementById('logoUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const logoPreview = document.getElementById('logoPreview');
+                    logoPreview.innerHTML = `<img src="${e.target.result}" alt="Logo" class="max-w-full max-h-full object-contain rounded-md">`;
+                    showToast('Logo cargado exitosamente', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // PDF Export functionality
+        document.getElementById('exportPdfBtn').addEventListener('click', function() {
+            showToast('Generando PDF...', 'success');
+            
+            // Simulate PDF generation
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.download = 'desprendible_juan_perez_enero_2025.pdf';
+                showToast('PDF generado exitosamente', 'success');
+            }, 2000);
+        });
+
+        document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+            showToast('Descargando desprendible...', 'success');
+            
+            // Simulate download
+            setTimeout(() => {
+                showToast('Descarga completada', 'success');
+            }, 1500);
+        });
+
+        // Batch export functionality
+        document.getElementById('batchExportBtn').addEventListener('click', function() {
+            showToast('Iniciando exportación en lote...', 'success');
+            
+            setTimeout(() => {
+                showToast('Exportación en lote completada', 'success');
+            }, 3000);
+        });
+
+        // Edit data modal
+        document.getElementById('editDataBtn').addEventListener('click', function() {
+            document.getElementById('editModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeEditModal').addEventListener('click', function() {
+            document.getElementById('editModal').classList.add('hidden');
+        });
+
+        document.getElementById('cancelEdit').addEventListener('click', function() {
+            document.getElementById('editModal').classList.add('hidden');
+        });
+
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('Datos actualizados exitosamente', 'success');
+            document.getElementById('editModal').classList.add('hidden');
+        });
+
+        // Preview functionality
+        document.getElementById('previewBtn').addEventListener('click', function() {
+            showToast('Abriendo vista previa PDF...', 'success');
+        });
+
+        // Save template functionality
+        document.getElementById('saveTemplateBtn').addEventListener('click', function() {
+            showToast('Plantilla guardada exitosamente', 'success');
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.md\\:hidden button').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.remove('hidden');
+        });
+
+        document.getElementById('closeMobileMenu').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.add('hidden');
+        });
+
+        // Company data update
+        document.getElementById('companyName').addEventListener('input', function() {
+            // Update company name in preview
+            const previewName = document.querySelector('#payslipPreview h2');
+            if (previewName) {
+                previewName.textContent = this.value;
+            }
+        });
+
+        document.getElementById('companyNit').addEventListener('input', function() {
+            // Update NIT in preview
+            const previewElements = document.querySelectorAll('#payslipPreview p');
+            previewElements.forEach(el => {
+                if (el.textContent.includes('NIT:')) {
+                    el.textContent = `NIT: ${this.value}`;
+                }
+            });
+        });
+
+        // Helper function for toast notifications
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} show`;
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        ${type === 'success' ? 
+                            '<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>' :
+                            '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>'
+                        }
+                    </svg>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('Desprendible cargado exitosamente', 'success');
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

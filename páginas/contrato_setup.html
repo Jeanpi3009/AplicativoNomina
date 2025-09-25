@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuración de Contrato - NominaContigo</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fnominacont6840back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="bg-surface border-b border-border-light shadow-custom-subtle">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-primary mr-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span class="text-xl font-semibold text-text-primary">NominaContigo</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-primary transition-micro">Dashboard</a>
+                    <a href="contract_setup.html" class="text-primary font-medium">Configuración</a>
+                    <a href="payroll_calculator.html" class="text-text-secondary hover:text-primary transition-micro">Calculadora</a>
+                    <a href="payslip_generator.html" class="text-text-secondary hover:text-primary transition-micro">Generar Nómina</a>
+                </div>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Usuario" class="h-8 w-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <span class="text-sm text-text-secondary">Admin</span>
+                    </div>
+                    <button class="md:hidden p-2 rounded-md text-text-secondary hover:text-primary hover:bg-secondary-50 transition-micro">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-semibold text-text-primary">Configuración de Contrato</h1>
+                    <p class="mt-2 text-text-secondary">Configure los detalles del contrato y parámetros de cálculo para el procesamiento de nómina</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="btn-secondary">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"/>
+                        </svg>
+                        Importar
+                    </button>
+                    <button class="btn-primary">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Nuevo Contrato
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Contract Form -->
+            <div class="lg:col-span-2">
+                <div class="card p-6">
+                    <!-- Contract Type Tabs -->
+                    <div class="mb-6">
+                        <div class="border-b border-border">
+                            <nav class="-mb-px flex space-x-8 overflow-x-auto">
+                                <button class="contract-tab active whitespace-nowrap py-2 px-1 border-b-2 border-primary text-primary font-medium text-sm" data-tab="indefinite">
+                                    Término Indefinido
+                                </button>
+                                <button class="contract-tab whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-text-secondary hover:text-text-primary hover:border-secondary-300 font-medium text-sm" data-tab="fixed">
+                                    Término Fijo
+                                </button>
+                                <button class="contract-tab whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-text-secondary hover:text-text-primary hover:border-secondary-300 font-medium text-sm" data-tab="labor">
+                                    Obra/Labor
+                                </button>
+                                <button class="contract-tab whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-text-secondary hover:text-text-primary hover:border-secondary-300 font-medium text-sm" data-tab="occasional">
+                                    Ocasional/Temporal
+                                </button>
+                                <button class="contract-tab whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-text-secondary hover:text-text-primary hover:border-secondary-300 font-medium text-sm" data-tab="apprentice">
+                                    Aprendizaje
+                                </button>
+                                <button class="contract-tab whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-text-secondary hover:text-text-primary hover:border-secondary-300 font-medium text-sm" data-tab="hourly">
+                                    Por Horas
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Employee Information Form -->
+                    <form id="contractForm" class="space-y-6">
+                        <!-- Employee Basic Info -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="form-label required">Nombre Completo *</label>
+                                <input type="text" class="form-input" placeholder="Juan Pérez García" value="Juan Pérez García" required />
+                            </div>
+                            <div>
+                                <label class="form-label required">Número de Identificación *</label>
+                                <input type="text" class="form-input" placeholder="1234567890" value="1234567890" required />
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-input" placeholder="juan.perez@email.com" value="juan.perez@email.com" />
+                            </div>
+                            <div>
+                                <label class="form-label">Teléfono</label>
+                                <input type="tel" class="form-input" placeholder="+57 300 123 4567" value="+57 300 123 4567" />
+                            </div>
+                        </div>
+
+                        <!-- Contract Details -->
+                        <div class="border-t border-border-light pt-6">
+                            <h3 class="text-lg font-medium text-text-primary mb-4">Detalles del Contrato</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="form-label required">Cargo/Posición *</label>
+                                    <input type="text" class="form-input" placeholder="Desarrollador Senior" value="Desarrollador Senior" required />
+                                </div>
+                                <div>
+                                    <label class="form-label required">Salario Base *</label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2 text-text-secondary">$</span>
+                                        <input type="text" class="form-input pl-8" placeholder="2.500.000" value="2.500.000" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                <div>
+                                    <label class="form-label required">Fecha de Inicio *</label>
+                                    <input type="date" class="form-input" value="2025-01-01" required />
+                                </div>
+                                <div class="contract-field" data-show="fixed,labor">
+                                    <label class="form-label">Fecha de Finalización</label>
+                                    <input type="date" class="form-input" value="2025-12-31" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Period Configuration -->
+                        <div class="border-t border-border-light pt-6">
+                            <h3 class="text-lg font-medium text-text-primary mb-4">Configuración del Período</h3>
+                            
+                            <div class="mb-6">
+                                <label class="form-label required">Modo de Cálculo *</label>
+                                <div class="mt-2 space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="calculationMode" value="specific" class="text-primary focus:ring-primary" checked />
+                                        <span class="ml-2 text-sm text-text-primary">Día específico con horarios</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="calculationMode" value="range" class="text-primary focus:ring-primary" />
+                                        <span class="ml-2 text-sm text-text-primary">Rango de fechas</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="calculationMode" value="month" class="text-primary focus:ring-primary" />
+                                        <span class="ml-2 text-sm text-text-primary">Mes completo</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Specific Day Fields -->
+                            <div id="specificDayFields" class="calculation-mode-fields">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div>
+                                        <label class="form-label">Hora de Inicio</label>
+                                        <input type="time" class="form-input" value="08:00" />
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Hora de Finalización</label>
+                                        <input type="time" class="form-input" value="17:00" />
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Tiempo de Descanso (min)</label>
+                                        <input type="number" class="form-input" placeholder="60" value="60" min="5" max="180" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date Range Fields -->
+                            <div id="dateRangeFields" class="calculation-mode-fields hidden">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="form-label">Fecha de Inicio</label>
+                                        <input type="date" class="form-input" value="2025-01-01" />
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Fecha de Finalización</label>
+                                        <input type="date" class="form-input" value="2025-01-31" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Month Fields -->
+                            <div id="monthFields" class="calculation-mode-fields hidden">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="form-label">Mes</label>
+                                        <select class="form-input">
+                                            <option value="1" selected>Enero 2025</option>
+                                            <option value="2">Febrero 2025</option>
+                                            <option value="3">Marzo 2025</option>
+                                            <option value="4">Abril 2025</option>
+                                            <option value="5">Mayo 2025</option>
+                                            <option value="6">Junio 2025</option>
+                                            <option value="7">Julio 2025</option>
+                                            <option value="8">Agosto 2025</option>
+                                            <option value="9">Septiembre 2025</option>
+                                            <option value="10">Octubre 2025</option>
+                                            <option value="11">Noviembre 2025</option>
+                                            <option value="12">Diciembre 2025</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Días Trabajados</label>
+                                        <input type="number" class="form-input" placeholder="30" value="30" min="1" max="31" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Benefits -->
+                        <div class="border-t border-border-light pt-6">
+                            <h3 class="text-lg font-medium text-text-primary mb-4">Beneficios Sociales</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="text-primary focus:ring-primary rounded" checked />
+                                        <span class="ml-2 text-sm text-text-primary">Cesantías (8.33% mensual)</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="text-primary focus:ring-primary rounded" checked />
+                                        <span class="ml-2 text-sm text-text-primary">Intereses de Cesantías (1% mensual)</span>
+                                    </label>
+                                </div>
+                                <div class="space-y-4">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="text-primary focus:ring-primary rounded" checked />
+                                        <span class="ml-2 text-sm text-text-primary">Prima de Servicios (8.33% semestral)</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="text-primary focus:ring-primary rounded" checked />
+                                        <span class="ml-2 text-sm text-text-primary">Vacaciones (4.17% mensual)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="flex justify-end space-x-4 pt-6 border-t border-border-light">
+                            <button type="button" class="btn-secondary">Cancelar</button>
+                            <button type="button" class="btn-secondary">Guardar Borrador</button>
+                            <button type="submit" class="btn-primary">Continuar a Cálculo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Calculation Preview Panel -->
+            <div class="lg:col-span-1">
+                <div class="card p-6 sticky top-8">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Vista Previa del Cálculo</h3>
+                    
+                    <!-- Employee Summary -->
+                    <div class="mb-6">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Empleado" class="h-12 w-12 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            <div>
+                                <p class="font-medium text-text-primary">Juan Pérez García</p>
+                                <p class="text-sm text-text-secondary">Desarrollador Senior</p>
+                            </div>
+                        </div>
+                        <div class="text-sm text-text-secondary">
+                            <p>ID: 1234567890</p>
+                            <p>Contrato: Término Indefinido</p>
+                        </div>
+                    </div>
+
+                    <!-- Calculation Summary -->
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Salario Base</span>
+                            <span class="font-medium text-text-primary">$2.500.000</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Horas Regulares</span>
+                            <span class="font-medium text-text-primary">8.0 hrs</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Recargos</span>
+                            <span class="font-medium text-success">$0</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Beneficios Sociales</span>
+                            <span class="font-medium text-success">$520.750</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-3 bg-primary-50 px-3 rounded-md">
+                            <span class="font-medium text-text-primary">Total Estimado</span>
+                            <span class="font-semibold text-primary text-lg">$3.020.750</span>
+                        </div>
+                    </div>
+
+                    <!-- Validation Status -->
+                    <div class="mt-6 pt-6 border-t border-border-light">
+                        <h4 class="text-sm font-medium text-text-primary mb-3">Estado de Validación</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <svg class="h-4 w-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-text-secondary">Información del empleado</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <svg class="h-4 w-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-text-secondary">Detalles del contrato</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <svg class="h-4 w-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-text-secondary">Configuración del período</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-6 pt-6 border-t border-border-light">
+                        <h4 class="text-sm font-medium text-text-primary mb-3">Acciones Rápidas</h4>
+                        <div class="space-y-2">
+                            <button class="w-full text-left px-3 py-2 text-sm text-text-secondary hover:bg-secondary-50 rounded-md transition-micro">
+                                <svg class="h-4 w-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Ver plantilla de contrato
+                            </button>
+                            <button class="w-full text-left px-3 py-2 text-sm text-text-secondary hover:bg-secondary-50 rounded-md transition-micro">
+                                <svg class="h-4 w-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                                Importar desde archivo
+                            </button>
+                            <button class="w-full text-left px-3 py-2 text-sm text-text-secondary hover:bg-secondary-50 rounded-md transition-micro">
+                                <svg class="h-4 w-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                                Duplicar configuración
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobileMenu" class="hidden md:hidden fixed inset-0 z-50 bg-black bg-opacity-50">
+        <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-surface shadow-xl">
+            <div class="flex items-center justify-between p-4 border-b border-border-light">
+                <span class="text-lg font-semibold text-text-primary">Menú</span>
+                <button id="closeMobileMenu" class="p-2 rounded-md text-text-secondary hover:text-primary">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4">
+                <a href="dashboard.html" class="block py-2 text-text-secondary hover:text-primary">Dashboard</a>
+                <a href="contract_setup.html" class="block py-2 text-primary font-medium">Configuración</a>
+                <a href="payroll_calculator.html" class="block py-2 text-text-secondary hover:text-primary">Calculadora</a>
+                <a href="payslip_generator.html" class="block py-2 text-text-secondary hover:text-primary">Generar Nómina</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Contract tab switching
+        document.querySelectorAll('.contract-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.contract-tab').forEach(t => {
+                    t.classList.remove('active', 'border-primary', 'text-primary');
+                    t.classList.add('border-transparent', 'text-text-secondary');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active', 'border-primary', 'text-primary');
+                this.classList.remove('border-transparent', 'text-text-secondary');
+                
+                // Show/hide relevant fields based on contract type
+                const contractType = this.dataset.tab;
+                updateContractFields(contractType);
+                
+                // Show success toast
+                showToast('Tipo de contrato actualizado', 'success');
+            });
+        });
+
+        // Calculation mode switching
+        document.querySelectorAll('input[name="calculationMode"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Hide all calculation mode fields
+                document.querySelectorAll('.calculation-mode-fields').forEach(field => {
+                    field.classList.add('hidden');
+                });
+                
+                // Show relevant fields
+                const mode = this.value;
+                if (mode === 'specific') {
+                    document.getElementById('specificDayFields').classList.remove('hidden');
+                } else if (mode === 'range') {
+                    document.getElementById('dateRangeFields').classList.remove('hidden');
+                } else if (mode === 'month') {
+                    document.getElementById('monthFields').classList.remove('hidden');
+                }
+                
+                showToast('Modo de cálculo actualizado', 'success');
+            });
+        });
+
+        // Form submission
+        document.getElementById('contractForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('border-error');
+                    isValid = false;
+                } else {
+                    field.classList.remove('border-error');
+                }
+            });
+            
+            if (isValid) {
+                showToast('Configuración guardada exitosamente', 'success');
+                setTimeout(() => {
+                    window.location.href = 'payroll_calculator.html';
+                }, 1500);
+            } else {
+                showToast('Por favor complete todos los campos requeridos', 'error');
+            }
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.md\\:hidden button').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.remove('hidden');
+        });
+
+        document.getElementById('closeMobileMenu').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.add('hidden');
+        });
+
+        // Helper functions
+        function updateContractFields(contractType) {
+            // Show/hide fields based on contract type
+            document.querySelectorAll('.contract-field').forEach(field => {
+                const showFor = field.dataset.show;
+                if (showFor && showFor.includes(contractType)) {
+                    field.style.display = 'block';
+                } else if (showFor) {
+                    field.style.display = 'none';
+                }
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} show`;
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        ${type === 'success' ? 
+                            '<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>' :
+                            '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>'
+                        }
+                    </svg>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial calculation mode
+            document.querySelector('input[name="calculationMode"]:checked').dispatchEvent(new Event('change'));
+            
+            // Add required field indicators
+            document.querySelectorAll('.form-label').forEach(label => {
+                if (label.classList.contains('required')) {
+                    label.style.position = 'relative';
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

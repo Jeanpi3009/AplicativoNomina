@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Nómina - NominaContigo</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fnominacont6840back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="bg-surface border-b border-border-light shadow-custom-subtle">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-primary mr-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span class="text-xl font-semibold text-text-primary">NominaContigo</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-primary transition-micro">Dashboard</a>
+                    <a href="contract_setup.html" class="text-text-secondary hover:text-primary transition-micro">Configuración</a>
+                    <a href="payroll_calculator.html" class="text-primary font-medium">Calculadora</a>
+                    <a href="payslip_generator.html" class="text-text-secondary hover:text-primary transition-micro">Generar Nómina</a>
+                </div>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Usuario" class="h-8 w-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <span class="text-sm text-text-secondary">Admin</span>
+                    </div>
+                    <button class="md:hidden p-2 rounded-md text-text-secondary hover:text-primary hover:bg-secondary-50 transition-micro">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-semibold text-text-primary">Calculadora de Nómina</h1>
+                    <p class="mt-2 text-text-secondary">Ingrese las horas trabajadas y calcule automáticamente la nómina conforme a la legislación laboral colombiana</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="btn-secondary" id="resetCalculator">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Reiniciar
+                    </button>
+                    <button class="btn-primary" id="generatePayslip">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Generar Desprendible
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Info Bar -->
+        <div class="card p-4 mb-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Empleado" class="h-12 w-12 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                    <div>
+                        <h3 class="font-medium text-text-primary">Juan Pérez García</h3>
+                        <p class="text-sm text-text-secondary">Desarrollador Senior • ID: 1234567890</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-text-secondary">Salario Base</p>
+                    <p class="font-semibold text-text-primary">$2.500.000</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Work Schedule Input -->
+            <div class="lg:col-span-2">
+                <div class="card p-6">
+                    <!-- Period Selection -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Configuración del Período</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="form-label">Fecha de Trabajo</label>
+                                <input type="date" class="form-input" id="workDate" value="2025-01-15" />
+                            </div>
+                            <div>
+                                <label class="form-label">Hora de Inicio</label>
+                                <input type="time" class="form-input" id="startTime" value="08:00" />
+                            </div>
+                            <div>
+                                <label class="form-label">Hora de Finalización</label>
+                                <input type="time" class="form-input" id="endTime" value="17:00" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Break Time Configuration -->
+                    <div class="mb-6 border-t border-border-light pt-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Configuración de Descansos</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">Tiempo de Descanso (minutos)</label>
+                                <input type="number" class="form-input" id="breakTime" placeholder="60" value="60" min="5" max="180" />
+                                <p class="text-xs text-text-secondary mt-1">Entre 5 y 180 minutos</p>
+                            </div>
+                            <div class="flex items-end">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="text-primary focus:ring-primary rounded" id="paidBreak" />
+                                    <span class="ml-2 text-sm text-text-primary">Descanso remunerado</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Holiday Detection -->
+                    <div class="mb-6 border-t border-border-light pt-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Detección Automática</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-secondary-50 rounded-md">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="h-5 w-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-sm font-medium text-text-primary">Tipo de Día</span>
+                                </div>
+                                <p class="text-sm text-text-secondary mt-1" id="dayTypeDetection">Día laboral regular</p>
+                            </div>
+                            <div class="p-4 bg-secondary-50 rounded-md">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-sm font-medium text-text-primary">Recargos Aplicables</span>
+                                </div>
+                                <p class="text-sm text-text-secondary mt-1" id="surchargeDetection">Sin recargos especiales</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Surcharge Blocks -->
+                    <div class="mb-6 border-t border-border-light pt-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-text-primary">Bloques de Recargo</h3>
+                            <button class="btn-secondary text-sm" id="addSurchargeBlock">
+                                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                                Agregar Bloque
+                            </button>
+                        </div>
+                        
+                        <div id="surchargeBlocks" class="space-y-4">
+                            <!-- Default Surcharge Block -->
+                            <div class="surcharge-block p-4 border border-border rounded-md">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-medium text-text-primary">Bloque 1 - Horas Regulares</h4>
+                                    <button class="text-text-secondary hover:text-error transition-micro remove-block" style="display: none;">
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <label class="form-label">Hora Inicio</label>
+                                        <input type="time" class="form-input block-start-time" value="08:00" />
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Hora Fin</label>
+                                        <input type="time" class="form-input block-end-time" value="17:00" />
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Tipo de Recargo</label>
+                                        <select class="form-input surcharge-type">
+                                            <option value="regular">Regular (0%)</option>
+                                            <option value="overtime-day">Extra Diurna (25%)</option>
+                                            <option value="overtime-night">Extra Nocturna (75%)</option>
+                                            <option value="night">Nocturno (35%)</option>
+                                            <option value="sunday">Dominical (75%)</option>
+                                            <option value="holiday">Festivo (75%)</option>
+                                            <option value="sunday-holiday">Dom. Festivo (100%)</option>
+                                            <option value="holiday-overtime">Festivo Extra (100%)</option>
+                                            <option value="holiday-night-overtime">Festivo Nocturno Extra (150%)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Horas Calculadas</label>
+                                        <input type="text" class="form-input calculated-hours font-data" readonly value="8.0" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Benefits Configuration -->
+                    <div class="border-t border-border-light pt-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Beneficios Sociales</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="text-primary focus:ring-primary rounded" id="cesantias" checked />
+                                    <span class="ml-2 text-sm text-text-primary">Cesantías (8.33%)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="text-primary focus:ring-primary rounded" id="interesesCesantias" checked />
+                                    <span class="ml-2 text-sm text-text-primary">Intereses Cesantías (1%)</span>
+                                </label>
+                            </div>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="text-primary focus:ring-primary rounded" id="primaServicios" checked />
+                                    <span class="ml-2 text-sm text-text-primary">Prima de Servicios (8.33%)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="text-primary focus:ring-primary rounded" id="vacaciones" checked />
+                                    <span class="ml-2 text-sm text-text-primary">Vacaciones (4.17%)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Results Panel -->
+            <div class="lg:col-span-1">
+                <div class="card p-6 sticky top-8">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Resultados en Tiempo Real</h3>
+                    
+                    <!-- Calculation Summary -->
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Horas Regulares</span>
+                            <span class="font-data text-text-primary" id="regularHours">8.0</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Horas Extra</span>
+                            <span class="font-data text-text-primary" id="overtimeHours">0.0</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Horas Nocturnas</span>
+                            <span class="font-data text-text-primary" id="nightHours">0.0</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-b border-border-light">
+                            <span class="text-sm text-text-secondary">Horas Dominicales</span>
+                            <span class="font-data text-text-primary" id="sundayHours">0.0</span>
+                        </div>
+                    </div>
+
+                    <!-- Salary Breakdown -->
+                    <div class="space-y-4 mb-6">
+                        <h4 class="font-medium text-text-primary">Desglose Salarial</h4>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-text-secondary">Salario Base</span>
+                            <span class="font-data text-text-primary" id="baseSalary">$2.500.000</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-text-secondary">Recargos</span>
+                            <span class="font-data text-success" id="surcharges">$0</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-t border-border-light">
+                            <span class="font-medium text-text-primary">Subtotal</span>
+                            <span class="font-data font-medium text-text-primary" id="subtotal">$2.500.000</span>
+                        </div>
+                    </div>
+
+                    <!-- Social Security Contributions -->
+                    <div class="space-y-4 mb-6">
+                        <h4 class="font-medium text-text-primary">Seguridad Social</h4>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-text-secondary">Salud (4%)</span>
+                            <span class="font-data text-error" id="healthContribution">-$100.000</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-text-secondary">Pensión (4%)</span>
+                            <span class="font-data text-error" id="pensionContribution">-$100.000</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-t border-border-light">
+                            <span class="font-medium text-text-primary">Total Deducciones</span>
+                            <span class="font-data font-medium text-error" id="totalDeductions">-$200.000</span>
+                        </div>
+                    </div>
+
+                    <!-- Social Benefits -->
+                    <div class="space-y-4 mb-6">
+                        <h4 class="font-medium text-text-primary">Beneficios Sociales</h4>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-text-secondary">Cesantías</span>
+                            <span class="font-data text-success" id="cesantiasAmount">$208.250</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-text-secondary">Prima Servicios</span>
+                            <span class="font-data text-success" id="primaAmount">$208.250</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm text-text-secondary">Vacaciones</span>
+                            <span class="font-data text-success" id="vacacionesAmount">$104.250</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-t border-border-light">
+                            <span class="font-medium text-text-primary">Total Beneficios</span>
+                            <span class="font-data font-medium text-success" id="totalBenefits">$520.750</span>
+                        </div>
+                    </div>
+
+                    <!-- Final Total -->
+                    <div class="p-4 bg-primary-50 rounded-md">
+                        <div class="flex justify-between items-center">
+                            <span class="font-semibold text-text-primary">Neto a Pagar</span>
+                            <span class="font-data font-bold text-primary text-xl" id="netPay">$2.820.750</span>
+                        </div>
+                    </div>
+
+                    <!-- Calculation Status -->
+                    <div class="mt-6 pt-6 border-t border-border-light">
+                        <h4 class="text-sm font-medium text-text-primary mb-3">Estado del Cálculo</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <svg class="h-4 w-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-text-secondary">Horarios configurados</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <svg class="h-4 w-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-text-secondary">Recargos aplicados</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <svg class="h-4 w-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-text-secondary">Beneficios calculados</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobileMenu" class="hidden md:hidden fixed inset-0 z-50 bg-black bg-opacity-50">
+        <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-surface shadow-xl">
+            <div class="flex items-center justify-between p-4 border-b border-border-light">
+                <span class="text-lg font-semibold text-text-primary">Menú</span>
+                <button id="closeMobileMenu" class="p-2 rounded-md text-text-secondary hover:text-primary">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4">
+                <a href="dashboard.html" class="block py-2 text-text-secondary hover:text-primary">Dashboard</a>
+                <a href="contract_setup.html" class="block py-2 text-text-secondary hover:text-primary">Configuración</a>
+                <a href="payroll_calculator.html" class="block py-2 text-primary font-medium">Calculadora</a>
+                <a href="payslip_generator.html" class="block py-2 text-text-secondary hover:text-primary">Generar Nómina</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Colombian holidays for 2025
+        const colombianHolidays = [
+            '2025-01-01', // Año Nuevo
+            '2025-01-06', // Reyes Magos
+            '2025-03-24', // San José
+            '2025-04-17', // Jueves Santo
+            '2025-04-18', // Viernes Santo
+            '2025-05-01', // Día del Trabajo
+            '2025-05-29', // Ascensión del Señor
+            '2025-06-19', // Corpus Christi
+            '2025-06-23', // Sagrado Corazón
+            '2025-06-30', // San Pedro y San Pablo
+            '2025-07-20', // Día de la Independencia
+            '2025-08-07', // Batalla de Boyacá
+            '2025-08-18', // Asunción de la Virgen
+            '2025-10-13', // Día de la Raza
+            '2025-11-03', // Todos los Santos
+            '2025-11-17', // Independencia de Cartagena
+            '2025-12-08', // Inmaculada Concepción
+            '2025-12-25'  // Navidad
+        ];
+
+        let surchargeBlockCounter = 1;
+        let baseSalaryPerHour = 2500000 / 240; // Assuming 240 working hours per month
+
+        // Initialize calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDayTypeDetection();
+            calculatePayroll();
+            
+            // Add event listeners
+            document.getElementById('workDate').addEventListener('change', updateDayTypeDetection);
+            document.getElementById('startTime').addEventListener('change', calculatePayroll);
+            document.getElementById('endTime').addEventListener('change', calculatePayroll);
+            document.getElementById('breakTime').addEventListener('change', calculatePayroll);
+            
+            // Social benefits checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', calculatePayroll);
+            });
+            
+            // Surcharge block listeners
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('block-start-time') || 
+                    e.target.classList.contains('block-end-time') || 
+                    e.target.classList.contains('surcharge-type')) {
+                    calculatePayroll();
+                }
+            });
+        });
+
+        // Add surcharge block
+        document.getElementById('addSurchargeBlock').addEventListener('click', function() {
+            surchargeBlockCounter++;
+            const surchargeBlocks = document.getElementById('surchargeBlocks');
+            
+            const newBlock = document.createElement('div');
+            newBlock.className = 'surcharge-block p-4 border border-border rounded-md';
+            newBlock.innerHTML = `
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-medium text-text-primary">Bloque ${surchargeBlockCounter}</h4>
+                    <button class="text-text-secondary hover:text-error transition-micro remove-block">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="form-label">Hora Inicio</label>
+                        <input type="time" class="form-input block-start-time" value="17:00">
+                    </div>
+                    <div>
+                        <label class="form-label">Hora Fin</label>
+                        <input type="time" class="form-input block-end-time" value="19:00">
+                    </div>
+                    <div>
+                        <label class="form-label">Tipo de Recargo</label>
+                        <select class="form-input surcharge-type">
+                            <option value="regular">Regular (0%)</option>
+                            <option value="overtime-day" selected>Extra Diurna (25%)</option>
+                            <option value="overtime-night">Extra Nocturna (75%)</option>
+                            <option value="night">Nocturno (35%)</option>
+                            <option value="sunday">Dominical (75%)</option>
+                            <option value="holiday">Festivo (75%)</option>
+                            <option value="sunday-holiday">Dom. Festivo (100%)</option>
+                            <option value="holiday-overtime">Festivo Extra (100%)</option>
+                            <option value="holiday-night-overtime">Festivo Nocturno Extra (150%)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Horas Calculadas</label>
+                        <input type="text" class="form-input calculated-hours font-data" readonly value="2.0">
+                    </div>
+                </div>
+            `;
+            
+            surchargeBlocks.appendChild(newBlock);
+            
+            // Show remove buttons for all blocks except the first one
+            document.querySelectorAll('.remove-block').forEach(btn => {
+                btn.style.display = 'block';
+            });
+            
+            calculatePayroll();
+            showToast('Bloque de recargo agregado', 'success');
+        });
+
+        // Remove surcharge block
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-block')) {
+                const block = e.target.closest('.surcharge-block');
+                block.remove();
+                
+                // Hide remove button if only one block remains
+                const remainingBlocks = document.querySelectorAll('.surcharge-block');
+                if (remainingBlocks.length === 1) {
+                    remainingBlocks[0].querySelector('.remove-block').style.display = 'none';
+                }
+                
+                calculatePayroll();
+                showToast('Bloque de recargo eliminado', 'success');
+            }
+        });
+
+        // Update day type detection
+        function updateDayTypeDetection() {
+            const workDate = document.getElementById('workDate').value;
+            const date = new Date(workDate);
+            const dayOfWeek = date.getDay();
+            const isHoliday = colombianHolidays.includes(workDate);
+            const isSunday = dayOfWeek === 0;
+            
+            let dayType = 'Día laboral regular';
+            let surchargeInfo = 'Sin recargos especiales';
+            
+            if (isHoliday && isSunday) {
+                dayType = 'Domingo festivo';
+                surchargeInfo = 'Recargo dominical festivo (100%)';
+            } else if (isHoliday) {
+                dayType = 'Día festivo';
+                surchargeInfo = 'Recargo festivo (75%)';
+            } else if (isSunday) {
+                dayType = 'Domingo';
+                surchargeInfo = 'Recargo dominical (75%)';
+            }
+            
+            document.getElementById('dayTypeDetection').textContent = dayType;
+            document.getElementById('surchargeDetection').textContent = surchargeInfo;
+            
+            calculatePayroll();
+        }
+
+        // Calculate payroll
+        function calculatePayroll() {
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const breakTime = parseInt(document.getElementById('breakTime').value) || 0;
+            const paidBreak = document.getElementById('paidBreak').checked;
+            
+            if (!startTime || !endTime) return;
+            
+            // Calculate total hours
+            const start = new Date(`2025-01-01T${startTime}`);
+            const end = new Date(`2025-01-01T${endTime}`);
+            if (end < start) end.setDate(end.getDate() + 1); // Handle overnight shifts
+            
+            let totalMinutes = (end - start) / (1000 * 60);
+            if (!paidBreak) {
+                totalMinutes -= breakTime;
+            }
+            
+            const totalHours = totalMinutes / 60;
+            
+            // Calculate surcharge blocks
+            let regularHours = 0;
+            let overtimeHours = 0;
+            let nightHours = 0;
+            let sundayHours = 0;
+            let totalSurcharges = 0;
+            
+            document.querySelectorAll('.surcharge-block').forEach(block => {
+                const blockStart = block.querySelector('.block-start-time').value;
+                const blockEnd = block.querySelector('.block-end-time').value;
+                const surchargeType = block.querySelector('.surcharge-type').value;
+                
+                if (blockStart && blockEnd) {
+                    const blockStartTime = new Date(`2025-01-01T${blockStart}`);
+                    const blockEndTime = new Date(`2025-01-01T${blockEnd}`);
+                    if (blockEndTime < blockStartTime) blockEndTime.setDate(blockEndTime.getDate() + 1);
+                    
+                    const blockHours = (blockEndTime - blockStartTime) / (1000 * 60 * 60);
+                    block.querySelector('.calculated-hours').value = blockHours.toFixed(1);
+                    
+                    // Calculate surcharge
+                    let surchargeRate = 0;
+                    switch (surchargeType) {
+                        case 'overtime-day': surchargeRate = 0.25; overtimeHours += blockHours; break;
+                        case 'overtime-night': surchargeRate = 0.75; overtimeHours += blockHours; nightHours += blockHours; break;
+                        case 'night': surchargeRate = 0.35; nightHours += blockHours; break;
+                        case 'sunday': surchargeRate = 0.75; sundayHours += blockHours; break;
+                        case 'holiday': surchargeRate = 0.75; break;
+                        case 'sunday-holiday': surchargeRate = 1.0; sundayHours += blockHours; break;
+                        case 'holiday-overtime': surchargeRate = 1.0; overtimeHours += blockHours; break;
+                        case 'holiday-night-overtime': surchargeRate = 1.5; overtimeHours += blockHours; nightHours += blockHours; break;
+                        default: regularHours += blockHours; break;
+                    }
+                    
+                    totalSurcharges += blockHours * baseSalaryPerHour * surchargeRate;
+                }
+            });
+            
+            // Update hour displays
+            document.getElementById('regularHours').textContent = regularHours.toFixed(1);
+            document.getElementById('overtimeHours').textContent = overtimeHours.toFixed(1);
+            document.getElementById('nightHours').textContent = nightHours.toFixed(1);
+            document.getElementById('sundayHours').textContent = sundayHours.toFixed(1);
+            
+            // Calculate salary breakdown
+            const baseSalary = 2500000;
+            const subtotal = baseSalary + totalSurcharges;
+            
+            document.getElementById('baseSalary').textContent = formatCurrency(baseSalary);
+            document.getElementById('surcharges').textContent = formatCurrency(totalSurcharges);
+            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+            
+            // Calculate social security contributions
+            const healthContribution = subtotal * 0.04;
+            const pensionContribution = subtotal * 0.04;
+            const totalDeductions = healthContribution + pensionContribution;
+            
+            document.getElementById('healthContribution').textContent = '-' + formatCurrency(healthContribution);
+            document.getElementById('pensionContribution').textContent = '-' + formatCurrency(pensionContribution);
+            document.getElementById('totalDeductions').textContent = '-' + formatCurrency(totalDeductions);
+            
+            // Calculate social benefits
+            let totalBenefits = 0;
+            let cesantiasAmount = 0;
+            let primaAmount = 0;
+            let vacacionesAmount = 0;
+            
+            if (document.getElementById('cesantias').checked) {
+                cesantiasAmount = subtotal * 0.0833;
+                totalBenefits += cesantiasAmount;
+            }
+            
+            if (document.getElementById('primaServicios').checked) {
+                primaAmount = subtotal * 0.0833;
+                totalBenefits += primaAmount;
+            }
+            
+            if (document.getElementById('vacaciones').checked) {
+                vacacionesAmount = subtotal * 0.0417;
+                totalBenefits += vacacionesAmount;
+            }
+            
+            document.getElementById('cesantiasAmount').textContent = formatCurrency(cesantiasAmount);
+            document.getElementById('primaAmount').textContent = formatCurrency(primaAmount);
+            document.getElementById('vacacionesAmount').textContent = formatCurrency(vacacionesAmount);
+            document.getElementById('totalBenefits').textContent = formatCurrency(totalBenefits);
+            
+            // Calculate net pay
+            const netPay = subtotal - totalDeductions + totalBenefits;
+            document.getElementById('netPay').textContent = formatCurrency(netPay);
+        }
+
+        // Reset calculator
+        document.getElementById('resetCalculator').addEventListener('click', function() {
+            document.getElementById('workDate').value = '2025-01-15';
+            document.getElementById('startTime').value = '08:00';
+            document.getElementById('endTime').value = '17:00';
+            document.getElementById('breakTime').value = '60';
+            document.getElementById('paidBreak').checked = false;
+            
+            // Reset to single surcharge block
+            const surchargeBlocks = document.getElementById('surchargeBlocks');
+            surchargeBlocks.innerHTML = `
+                <div class="surcharge-block p-4 border border-border rounded-md">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-medium text-text-primary">Bloque 1 - Horas Regulares</h4>
+                        <button class="text-text-secondary hover:text-error transition-micro remove-block" style="display: none;">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="form-label">Hora Inicio</label>
+                            <input type="time" class="form-input block-start-time" value="08:00">
+                        </div>
+                        <div>
+                            <label class="form-label">Hora Fin</label>
+                            <input type="time" class="form-input block-end-time" value="17:00">
+                        </div>
+                        <div>
+                            <label class="form-label">Tipo de Recargo</label>
+                            <select class="form-input surcharge-type">
+                                <option value="regular">Regular (0%)</option>
+                                <option value="overtime-day">Extra Diurna (25%)</option>
+                                <option value="overtime-night">Extra Nocturna (75%)</option>
+                                <option value="night">Nocturno (35%)</option>
+                                <option value="sunday">Dominical (75%)</option>
+                                <option value="holiday">Festivo (75%)</option>
+                                <option value="sunday-holiday">Dom. Festivo (100%)</option>
+                                <option value="holiday-overtime">Festivo Extra (100%)</option>
+                                <option value="holiday-night-overtime">Festivo Nocturno Extra (150%)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Horas Calculadas</label>
+                            <input type="text" class="form-input calculated-hours font-data" readonly value="8.0">
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            surchargeBlockCounter = 1;
+            updateDayTypeDetection();
+            calculatePayroll();
+            showToast('Calculadora reiniciada', 'success');
+        });
+
+        // Generate payslip
+        document.getElementById('generatePayslip').addEventListener('click', function() {
+            showToast('Redirigiendo al generador de desprendibles...', 'success');
+            setTimeout(() => {
+                window.location.href = 'payslip_generator.html';
+            }, 1500);
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.md\\:hidden button').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.remove('hidden');
+        });
+
+        document.getElementById('closeMobileMenu').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.add('hidden');
+        });
+
+        // Helper functions
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} show`;
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        ${type === 'success' ? 
+                            '<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>' :
+                            '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>'
+                        }
+                    </svg>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

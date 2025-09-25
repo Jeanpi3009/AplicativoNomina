@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión - NominaContigo</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fnominacont6840back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <defs>
+                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" class="text-primary"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <!-- Login Card -->
+        <div class="max-w-md w-full space-y-8">
+            <!-- Header Section -->
+            <div class="text-center">
+                <!-- Logo -->
+                <div class="flex justify-center mb-6">
+                    <div class="flex items-center">
+                        <svg class="h-12 w-12 text-primary mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <div class="text-left">
+                            <h1 class="text-2xl font-semibold text-text-primary">NominaContigo</h1>
+                            <p class="text-sm text-text-secondary">Sistema de Nómina Colombiano</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Welcome Message -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-medium text-text-primary mb-2">Bienvenido de nuevo</h2>
+                    <p class="text-text-secondary">Accede a tu espacio de trabajo de nómina</p>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div class="card p-8">
+                <form id="loginForm" class="space-y-6">
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="form-label required">Correo Electrónico *</label>
+                        <div class="relative">
+                            <input type="email" id="email" name="email" class="form-input pl-10" placeholder="admin@nominacontigo.com" value="admin@nominacontigo.com" required />
+                            <svg class="absolute left-3 top-2.5 h-5 w-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                            </svg>
+                        </div>
+                        <div id="emailError" class="form-error hidden">Por favor ingrese un correo válido</div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="password" class="form-label required">Contraseña *</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" class="form-input pl-10 pr-10" placeholder="••••••••" value="admin123" required />
+                            <svg class="absolute left-3 top-2.5 h-5 w-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            <button type="button" id="togglePassword" class="absolute right-3 top-2.5 h-5 w-5 text-text-secondary hover:text-primary transition-micro">
+                                <svg id="eyeOpen" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                <svg id="eyeClosed" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="passwordError" class="form-error hidden">La contraseña debe tener al menos 6 caracteres</div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="rememberMe" class="text-primary focus:ring-primary rounded" />
+                            <span class="ml-2 text-sm text-text-secondary">Recordarme</span>
+                        </label>
+                        <button type="button" class="text-sm text-primary hover:text-primary-700 transition-micro">
+                            ¿Olvidaste tu contraseña?
+                        </button>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="w-full btn-primary py-3 text-base">
+                        <svg class="h-5 w-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                        </svg>
+                        Iniciar Sesión
+                    </button>
+
+                    <!-- Demo Credentials Info -->
+                    <div class="mt-4 p-3 bg-primary-50 border border-primary-100 rounded-md">
+                        <div class="flex items-start">
+                            <svg class="h-5 w-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <div class="text-sm">
+                                <p class="text-primary font-medium mb-1">Credenciales de Demostración</p>
+                                <p class="text-primary-700">Email: admin@nominacontigo.com</p>
+                                <p class="text-primary-700">Contraseña: admin123</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Divider -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-border"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-surface text-text-secondary">¿Nuevo usuario?</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Link -->
+                <div class="mt-6 text-center">
+                    <button type="button" class="btn-secondary w-full py-3">
+                        <svg class="h-5 w-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                        </svg>
+                        Crear Nueva Cuenta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Trust Signals -->
+            <div class="mt-8 space-y-4">
+                <!-- Colombian Compliance Badge -->
+                <div class="card p-4">
+                    <div class="flex items-center justify-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <img src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?q=80&w=2981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Colombia Flag" class="h-6 w-8 object-cover rounded" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            <div class="text-center">
+                                <p class="text-xs font-medium text-text-primary">Cumplimiento Legal</p>
+                                <p class="text-xs text-text-secondary">Código Laboral 2025</p>
+                            </div>
+                        </div>
+                        <div class="h-8 w-px bg-border"></div>
+                        <div class="text-center">
+                            <p class="text-xs font-medium text-text-primary">Moneda Oficial</p>
+                            <p class="text-xs text-text-secondary">Peso Colombiano (COP)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Features -->
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="flex flex-col items-center space-y-1">
+                        <svg class="h-6 w-6 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-xs text-text-secondary">Datos Seguros</span>
+                    </div>
+                    <div class="flex flex-col items-center space-y-1">
+                        <svg class="h-6 w-6 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zm-1 0a1 1 0 011-1h8a1 1 0 011 1v1H5V6zm7-1V5a1 1 0 00-1-1H9a1 1 0 00-1 1v1h4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-xs text-text-secondary">Encriptación</span>
+                    </div>
+                    <div class="flex flex-col items-center space-y-1">
+                        <svg class="h-6 w-6 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-xs text-text-secondary">Cumplimiento</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center text-xs text-text-secondary mt-8">
+                <p>© 2025 NominaContigo. Todos los derechos reservados.</p>
+                <p class="mt-1">Sistema de nómina conforme al Código Laboral Colombiano</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+
+    <!-- PWA Install Prompt -->
+    <div id="pwaInstallPrompt" class="hidden fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 card p-4 z-50">
+        <div class="flex items-start space-x-3">
+            <svg class="h-6 w-6 text-primary flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+            <div class="flex-1">
+                <h4 class="text-sm font-medium text-text-primary">Instalar NominaContigo</h4>
+                <p class="text-xs text-text-secondary mt-1">Accede más rápido desde tu dispositivo</p>
+                <div class="flex space-x-2 mt-3">
+                    <button id="installPWA" class="btn-primary text-xs px-3 py-1">Instalar</button>
+                    <button id="dismissPWA" class="btn-secondary text-xs px-3 py-1">Ahora no</button>
+                </div>
+            </div>
+            <button id="closePWAPrompt" class="text-text-secondary hover:text-primary">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Form validation and submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Reset previous errors
+            document.getElementById('emailError').classList.add('hidden');
+            document.getElementById('passwordError').classList.add('hidden');
+            document.getElementById('email').classList.remove('border-error');
+            document.getElementById('password').classList.remove('border-error');
+            
+            let isValid = true;
+            
+            // Email validation
+            if (!email || !isValidEmail(email)) {
+                document.getElementById('emailError').classList.remove('hidden');
+                document.getElementById('email').classList.add('border-error');
+                isValid = false;
+            }
+            
+            // Password validation
+            if (!password || password.length < 6) {
+                document.getElementById('passwordError').classList.remove('hidden');
+                document.getElementById('password').classList.add('border-error');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Mock authentication - check demo credentials
+                if (email === 'admin@nominacontigo.com' && password === 'admin123') {
+                    showToast('Inicio de sesión exitoso. Redirigiendo...', 'success');
+                    
+                    // Store login state
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('loginTime', new Date().toISOString());
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    showToast('Credenciales incorrectas. Use las credenciales de demostración.', 'error');
+                }
+            } else {
+                showToast('Por favor corrija los errores en el formulario', 'error');
+            }
+        });
+
+        // Password visibility toggle
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            const eyeOpen = document.getElementById('eyeOpen');
+            const eyeClosed = document.getElementById('eyeClosed');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeOpen.classList.add('hidden');
+                eyeClosed.classList.remove('hidden');
+            } else {
+                passwordField.type = 'password';
+                eyeOpen.classList.remove('hidden');
+                eyeClosed.classList.add('hidden');
+            }
+        });
+
+        // Real-time validation
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            if (email && isValidEmail(email)) {
+                this.classList.remove('border-error');
+                document.getElementById('emailError').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            if (password && password.length >= 6) {
+                this.classList.remove('border-error');
+                document.getElementById('passwordError').classList.add('hidden');
+            }
+        });
+
+        // PWA Installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show custom install prompt after a delay
+            setTimeout(() => {
+                if (!localStorage.getItem('pwaPromptDismissed')) {
+                    document.getElementById('pwaInstallPrompt').classList.remove('hidden');
+                }
+            }, 3000);
+        });
+
+        document.getElementById('installPWA').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    showToast('¡Aplicación instalada exitosamente!', 'success');
+                }
+                
+                deferredPrompt = null;
+                document.getElementById('pwaInstallPrompt').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('dismissPWA').addEventListener('click', () => {
+            document.getElementById('pwaInstallPrompt').classList.add('hidden');
+            localStorage.setItem('pwaPromptDismissed', 'true');
+        });
+
+        document.getElementById('closePWAPrompt').addEventListener('click', () => {
+            document.getElementById('pwaInstallPrompt').classList.add('hidden');
+        });
+
+        // Helper functions
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} show`;
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        ${type === 'success' ? 
+                            '<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>' :
+                            '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>'
+                        }
+                    </svg>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                const loginTime = new Date(localStorage.getItem('loginTime'));
+                const now = new Date();
+                const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
+                
+                // Auto-redirect if logged in within last 24 hours
+                if (hoursSinceLogin < 24) {
+                    showToast('Sesión activa detectada. Redirigiendo...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                }
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Enter key on form
+            if (e.key === 'Enter' && (e.target.id === 'email' || e.target.id === 'password')) {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
